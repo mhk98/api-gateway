@@ -1,5 +1,41 @@
-import { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from "axios";
+import { error } from "console";
+import config from "../config";
 
 const HttpService = (baseUrl: string): AxiosInstance => {
-    const
+    const instance = axios.create({
+        baseURL: baseUrl,
+        timeout: 10000,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    instance.interceptors.request.use(
+        (config) => {
+            return config
+        },
+
+        (error) => {
+            return error
+        }
+    )
+
+
+    instance.interceptors.response.use(
+        (resonse) => {
+            return Promise.reject(error)
+        },
+        (error) =>{
+            return error
+        }
+    )
+
+
+    return instance
 }
+
+const AuthService = HttpService(config.authServiceUrl)
+const CoreService = HttpService(config.coreServiceUrl)
+
+export {HttpService, AuthService, CoreService}
