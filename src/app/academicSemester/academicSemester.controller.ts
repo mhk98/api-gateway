@@ -23,8 +23,41 @@ const getAllFromDB =async (req: Request, res: Response, next: NextFunction) =>{
     }
 }
 
+const getDataById =async (req: Request, res: Response, next: NextFunction) =>{
+
+    try {
+        const result = await AcademicSemesterService.getDataById(req)
+        sendResponse(res, result);
+    } catch (err) {
+        next(err)
+    }
+}
+
+const updateOneIntoDB =async (req: Request, res: Response, next: NextFunction) =>{
+
+    try {
+        const result = await AcademicSemesterService.updateOneIntoDB(req)
+        sendResponse(res, result);
+    } catch (err) {
+        next(err)
+    }
+}
+
+const deleteDataById =async (req: Request, res: Response, next: NextFunction) =>{
+
+    try {
+        const result = await AcademicSemesterService.deleteDataById(req)
+        sendResponse(res, result);
+    } catch (err) {
+        next(err)
+    }
+}
+
 
 export const AcademicSemesterController = {
     insertIntoDB,
-    getAllFromDB
+    getAllFromDB,
+    getDataById,
+    updateOneIntoDB,
+    deleteDataById
 }
